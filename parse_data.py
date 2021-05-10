@@ -41,7 +41,7 @@ def transform(args):
     output_data = pd.DataFrame(data=output_data, columns=['text'])
     output_data.to_csv(args.output_data_file)
 
-    
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='parameter description')
     parser.add_argument('--input_data_file', dest='input_data_file', type=str, required=True)
@@ -51,5 +51,4 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     
-    # input_data
-    input_data = pd.read_csv(args.input_data_file)
+    transform(args)
