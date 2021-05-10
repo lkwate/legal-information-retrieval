@@ -39,7 +39,7 @@ def transform(args):
         output_data.append(text)
 
     output_data = pd.DataFrame(data=output_data, columns=['text'])
-    output_data.to_csv(args.output_data_file)
+    output_data.to_csv(args.output_data_file, index=False)
 
 
 if __name__ == '__main__':
