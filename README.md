@@ -1,1 +1,3 @@
-# legal-advisor
+# legal-information-retrieval
+
+Almost all our daily activities are regulated by the legistation of a superior instution, all these rules are generally written in natural language and quite hard to understand for an average citizen. The literacy in the legal domain is a subject of many research in Natural Language Processing, in this work, we study the ability of long-range Transformer --in our case BigBird--. to understand a quite long legal corpus. We trained two version of BigBird. the first on Eurlex data -- publicly available legal corpus from the European Union, which mainly consits of statutes--, the second on the US legal cases from [PUblic legal cases](https://case.law/)
