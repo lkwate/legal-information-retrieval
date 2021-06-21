@@ -7,4 +7,3 @@ Almost all our daily activities are regulated by the legislation of a superior i
 python3 data-processing/data-sampling.py "data/AILA_2019/pair_statute.csv" "data/experiment/pair_statute" "label"
 python3 data-processing/data-sampling.py "data/AILA_2019/pair_case.csv" "data/experiment/pair_case" "label"
 ```
-
