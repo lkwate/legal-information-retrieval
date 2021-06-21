@@ -1,0 +1,4 @@
+pytorch_lightning>=1.3.0
+click
+black
+loguru
