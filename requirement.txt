@@ -1,4 +1,5 @@
-pytorch_lightning>=1.3.0
+pytorch_lightning
+torch
 click
 black
 loguru
