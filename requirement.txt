@@ -3,3 +3,5 @@ torch
 click
 black
 loguru
+pyserini
+faiss-cpu

@@ -93,15 +93,15 @@ class LegalBigBird(pl.LightningModule):
         output = {
             "optimizer": optimizer,
             "lr_scheduler": scheduler,
-            "monitor": "val_loss"
+            "monitor": "val_loss",
         }
         return optimizer
-    
+
     def _compute_loss(self, batch):
         batch = {k: v.squeeze(1) for k, v in batch.items()}
         loss = self.model(**batch).loss
         return loss
-    
+
     def training_step(self, batch, batch_idx):
         loss = self._compute_loss(batch)
         self.log("train_loss", loss)
