@@ -7,7 +7,7 @@ from loguru import logger
 import numpy as np
 
 @click.command()
-@click.argument("model", type=click.Path(exists=True))
+@click.argument("model", type=click.Path())
 @click.argument("index", type=click.Path(exists=True))
 @click.argument("documents", type=click.Path(exists=True))
 @click.argument("mapping", type=click.Path(exists=True))
