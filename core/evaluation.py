@@ -12,7 +12,7 @@ import numpy as np
 @click.argument("documents", type=click.Path(exists=True))
 @click.argument("mapping", type=click.Path(exists=True))
 @click.argument("top_k", type=int)
-@click.argument("output_filepath", type=click.Path(exists=True))
+@click.argument("output_filepath", type=click.Path())
 @click.option("--separator", type=str, default=",")
 def main(
     model: str,
