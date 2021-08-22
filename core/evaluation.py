@@ -26,8 +26,9 @@ def main(
     # build mapping
     doc_mapping = {}
     for line in open(mapping).readlines():
+        line = line.rstrip()
         line = line.split(";")
-        if len(line) == 1:
+        if line[1] == "":
             continue
         doc_id = int(line[0])
         mapped_docs = set(map(int, line[1].split(",")))
