@@ -36,7 +36,10 @@ class LongAutoDocumentEncoder(DocumentEncoder):
         outputs = self.model(**inputs)
         if self.pooling == "mean":
             embeddings = (
-                mean_pooling(outputs[0], inputs["attention_mask"]).detach().cpu().numpy()
+                mean_pooling(outputs[0], inputs["attention_mask"])
+                .detach()
+                .cpu()
+                .numpy()
             )
         else:
             embeddings = outputs[0][:, 0, :].detach().cpu().numpy()
