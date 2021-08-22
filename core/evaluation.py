@@ -36,7 +36,7 @@ def main(
         
     # searcher
     encoder = AutoQueryEncoder(encoder_dir=model, pooling="mean", l2_norm=True)
-    searcher = SimpleDenseSearcher.from_prebuilt_index(index, encoder)
+    searcher = SimpleDenseSearcher(index_dir=index, query_encoder=encoder)
     
     score = []
     for doc_id, mapped_docs in tqdm(doc_mapping.items()):
