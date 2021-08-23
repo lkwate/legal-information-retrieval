@@ -13,14 +13,12 @@ import pandas as pd
 @click.argument("documents", type=click.Path(exists=True))
 @click.argument("mapping", type=click.Path(exists=True))
 @click.argument("output_filepath", type=click.Path())
-@click.option("--separator", type=str, default=",")
 def main(
     model: str,
     index: str,
     documents: str,
     mapping: str,
     output_filepath: str,
-    separator: str
 ):
     # build mapping
     doc_mapping = {}
