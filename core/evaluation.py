@@ -5,13 +5,13 @@ import json
 import os
 from loguru import logger
 import numpy as np
+import pandas as pd
 
 @click.command()
 @click.argument("model", type=click.Path())
 @click.argument("index", type=click.Path(exists=True))
 @click.argument("documents", type=click.Path(exists=True))
 @click.argument("mapping", type=click.Path(exists=True))
-@click.argument("top_k", type=int)
 @click.argument("output_filepath", type=click.Path())
 @click.option("--separator", type=str, default=",")
 def main(
@@ -19,7 +19,6 @@ def main(
     index: str,
     documents: str,
     mapping: str,
-    top_k: int,
     output_filepath: str,
     separator: str
 ):
@@ -43,16 +42,12 @@ def main(
         input_filepath = os.path.join(documents, f"doc{doc_id}.json")
         contents = json.loads(open(input_filepath).read())["contents"]
         
-        hits = searcher.search(contents)[:top_k]
-        doc_ids = set(map(lambda item: item.docid, hits))
-        matchs = doc_ids & mapped_docs
-        score.append(len(matchs) / len(mapped_docs))
+        hits = searcher.search(contents)
+        doc_ids = ".".join(list(map(lambda item: str(item.docid), hits)))
+        score.append((doc_id, doc_ids))
     
-    score = np.mean(score)
-    with open(output_filepath, "a") as f:
-        line = separator.join([model, str(top_k), str(score)])
-        logger.info(line)
-        f.write(f"{line}{os.linesep}")
+    data = pd.DataFrame(data=score, columns=["id", "hi"])
+    data.to_csv(output_filepath, index=False)
 
 if __name__ == "__main__":
     main()

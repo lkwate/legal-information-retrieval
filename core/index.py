@@ -11,7 +11,7 @@ from pyserini.dindex import (
     AnceDocumentEncoder,
     AutoDocumentEncoder,
 )
-from encoder import LongAutoDocumentEncoder
+from .encoder import LongAutoDocumentEncoder
 
 
 def init_encoder(encoder: str, device: torch.device):
