@@ -44,7 +44,7 @@ def main(
         doc_ids = ".".join(list(map(lambda item: str(item.docid), hits)))
         score.append((doc_id, doc_ids))
     
-    data = pd.DataFrame(data=score, columns=["id", "hi"])
+    data = pd.DataFrame(data=score, columns=["id", "hits"])
     data.to_csv(output_filepath, index=False)
 
 if __name__ == "__main__":
