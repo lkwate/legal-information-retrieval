@@ -22,7 +22,7 @@ def score(data: pd.DataFrame, doc_mapping: Dict[int, set], k: int):
 @click.argument("output_filepath", type=click.Path())
 @click.argument("model", type=str)
 def main(input_result_file: str, mapping: str, output_filepath: str, model: str):
-    
+
     # build mapping
     doc_mapping = {}
     for line in open(mapping).readlines():
