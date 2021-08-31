@@ -16,6 +16,7 @@ def score(data: pd.DataFrame, doc_mapping: Dict[int, set], k: int):
 
     return np.mean(results)
 
+
 @click.command()
 @click.argument("input_result_file", type=click.Path(exists=True))
 @click.argument("mapping", type=click.Path(exists=True))
@@ -33,13 +34,15 @@ def main(input_result_file: str, mapping: str, output_filepath: str, model: str)
         doc_id = int(line[0])
         mapped_docs = set(map(int, line[1].split(",")))
         doc_mapping[doc_id] = mapped_docs
-    
+
     data = pd.read_csv(input_result_file)
     results = []
     for k in tqdm(range(1, 51)):
         match = score(data, doc_mapping, k)
         results.append(f"{model},{k},{match}{os.linesep}")
-    
+
     open(output_filepath, "w").writelines(results)
+
+
 if __name__ == "__main__":
     main()

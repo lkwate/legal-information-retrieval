@@ -1,10 +1,9 @@
 import torch
-from transformers import AutoModel, AutoTokenizer
-from pyserini.dindex import DocumentEncoder
+from pyserini.dsearch import AutoQueryEncoder
 import faiss
 
 
-class LongAutoDocumentEncoder(DocumentEncoder):
+class LongAutoDocumentEncoder(AutoQueryEncoder):
     def __init__(
         self,
         model_name,
@@ -14,14 +13,14 @@ class LongAutoDocumentEncoder(DocumentEncoder):
         max_length=2048,
         l2_norm=False,
     ):
-        self.device = device
-        self.model = AutoModel.from_pretrained(model_name)
-        self.model.to(self.device)
-        self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name or model_name)
-        self.has_model = True
-        self.pooling = pooling
+        super().__init__(
+            model_name,
+            tokenizer_name=tokenizer_name,
+            device=device,
+            pooling=pooling,
+            l2_norm=l2_norm,
+        )
         self.max_length = max_length
-        self.l2_norm = l2_norm
 
     def encode(self, texts, titles=None):
         inputs = self.tokenizer(
