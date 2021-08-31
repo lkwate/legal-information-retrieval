@@ -2,6 +2,7 @@ import os
 import json
 from loguru import logger
 
+
 class DocumentFactor:
     def __init__(self, source):
         if os.path.isdir(source):
