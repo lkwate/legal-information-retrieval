@@ -131,3 +131,4 @@ dmypy.json
 documents/
 models/
 test*
+index/
