@@ -17,22 +17,27 @@ class EntailmentSearcher:
         documents,
         hidden_dim=768,
         top_k=5,
-        device="cpu"
+        device="cpu",
     ) -> None:
         self.document_factory = DocumentFactor(documents)
-        self.encoder = AutoQueryEncoder(encoder_dir=model, pooling="mean", l2_norm=True, device=device)
+        self.encoder = AutoQueryEncoder(
+            encoder_dir=model, pooling="mean", l2_norm=True, device=device
+        )
         self.dense_searcher = SimpleDenseSearcher(
             query_encoder=self.encoder, index_dir=dense_index
         )
         self.sparse_searcher = SimpleSearcher(sparse_index)
         self.hidden_dim = hidden_dim
         self.top_k = top_k
+        self.cross_search_prefix = "cross_"
+        self.pairwise_search_prefix = "pairwise_"
 
     def __call__(self, query: str):
         hits = self.sparse_searcher.search(query, k=self.top_k)
         output = []
-        
+
         for hit in hits:
+            logger.info(f"entailment search for the hit : {hit.docid}")
             try:
                 case = self.document_factory.get_document(str(hit.docid))
                 cross_out = self._cross_search(query, case)
@@ -92,11 +97,11 @@ class EntailmentSearcher:
         case_par_index = np.argmin(case_scores)
         best_pair = (query_par_index, case_par_index)
         output = {
-            "pair": best_pair,
-            "query_paragraph": query_paragraphs[query_par_index],
-            "case_paragraph": case_paragraphs[case_par_index],
-            "query_scores": query_scores,
-            "case_scores": case_scores,
+            f"{self.cross_search_prefix}pair": best_pair,
+            f"{self.cross_search_prefix}query_paragraph": query_paragraphs[query_par_index],
+            f"{self.cross_search_prefix}case_paragraph": case_paragraphs[case_par_index],
+            f"{self.cross_search_prefix}query_scores": query_scores,
+            f"{self.cross_search_prefix}case_scores": case_scores,
         }
         logger.info("cross search completed.")
         return output
@@ -121,9 +126,9 @@ class EntailmentSearcher:
                     best_score = sim_score
                     best_pair = (query_par_index, case_par_index)
         output = {
-            "pair": best_pair,
-            "query_paragraph": query_paragraphs[best_pair[0]],
-            "case_paragraph": case_paragraphs[best_pair[1]],
+            f"{self.pairwise_search_prefix}pair": best_pair,
+            f"{self.pairwise_search_prefix}query_paragraph": query_paragraphs[best_pair[0]],
+            f"{self.pairwise_search_prefix}case_paragraph": case_paragraphs[best_pair[1]],
         }
         logger.info("pairwise search completed.")
         return output
