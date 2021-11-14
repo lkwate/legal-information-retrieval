@@ -3,6 +3,8 @@ import pandas as pd
 from .entailment_searcher import EntailmentSearcher
 import os
 import json
+from loguru import logger
+from tqdm import tqdm
 
 
 @click.command()
@@ -34,11 +36,13 @@ def main(
         device=device,
     )
     output = []
-    for filename in os.listdir(documents):
+    for filename in tqdm(list(os.listdir(documents))):
+        logger.info(f"Processing {filename} started...")
         input_filepath = os.path.join(documents, filename)
         query = json.loads(open(input_filepath).read())["contents"]
         result = searcher(query)
         output.append(result)
+        logger.info(f"Processing {filename} completed.")
     
     with open(output_filepath, "w") as f:
         json.dump(output, f)

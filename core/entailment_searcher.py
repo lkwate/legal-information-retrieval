@@ -33,16 +33,17 @@ class EntailmentSearcher:
         self.pairwise_search_prefix = "pairwise_"
 
     def __call__(self, query: str):
-        hits = self.sparse_searcher.search(query, k=self.top_k)
+        hits = self.sparse_searcher.search(query, k=self.top_k + 1)[1:]
         output = []
 
         for hit in hits:
             logger.info(f"entailment search for the hit : {hit.docid}")
             try:
                 case = self.document_factory.get_document(str(hit.docid))
-                cross_out = self._cross_search(query, case)
+                # cross_out = self._cross_search(query, case)
                 pairwise_out = self._pairwise_search(query, case)
-                result = {"score": hit.score, **cross_out, **pairwise_out}
+                # result = {"score": hit.score, **cross_out, **pairwise_out}
+                result = {"score": hit.score, **pairwise_out}
                 output.append(result)
             except ValueError:
                 continue
