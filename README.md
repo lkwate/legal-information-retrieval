@@ -8,7 +8,7 @@ Almost all our daily activities are regulated by the legislation of a superior i
 * [Legal-Bigbird-eurlex](https://huggingface.co/lkwate/legal-bigbird-eurlex)
 
 # Pipeline Summary
-![Pileline Summary](https://github.com/lkwate/legal-information-retrieval/tree/master/pictures/legal-bigbird-summary.drawio.png)
+![Pileline Summary](https://github.com/lkwate/legal-information-retrieval/blob/master/pictures/legal-bigbird-summary.drawio.png)
 # Launch the MLM Training
 ```{sh}
 python3 -m core.mlm_trainer
